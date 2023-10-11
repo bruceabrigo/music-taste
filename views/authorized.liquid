@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/styles.css"/>
     <title>Music Taste</title>
 </head>
 <body>
     <h1>Welcome to Music Taste</h1>
-    {% for item in apiData.items %}
-        <p>{{ item.name }}</p>
-      {% endfor %}
-      
+    <div class="top-artists">
+        <h2>Top Artists:</h2>
+        {% for item in topArtists.items %}
+            <p>{{ item.name }}</p>
+        {% endfor %}
+    </div>
+    <div class="top-songs">
+        <h2>Top Songs:</h2>
+        {% for item in topSongs.items %}
+            <p>{{ item.name }}</p>
+        {% endfor %}
+    </div> 
+
 </body>
 </html>

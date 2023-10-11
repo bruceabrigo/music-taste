@@ -81,17 +81,23 @@ app.get('/account', async (req, res) => {
 
     const accessToken = spotifyResponse.data.access_token;
 
-    // Now that you have the access token, you can make requests to the Spotify API.
-    const apiResponse = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
+    const topArtists = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    // Handle the API response data here
-    console.log(apiResponse.data);
+    // Log topArtist
+    console.log(topArtists.data);
+    // Log topSongs
+    console.log(topSongs.data)
 
-    res.render('authorized.liquid', { apiData: apiResponse.data });
+    res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error occurred while making Spotify API request.");
