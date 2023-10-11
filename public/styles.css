@@ -1,6 +1,77 @@
-a {
-    color: black;
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #535353;
+    font-family: Arial, Helvetica, sans-serif;
 }
-h1 {
-    color: purple;
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-card {
+    display: flex;
+    flex-direction: column; /* Stack title and button vertically */
+    justify-content: center;
+    align-items: center;
+    background-color: #212121;
+    width: 300px;
+    height: 400px;
+}
+
+.card-title {
+    color: white;
+    margin-bottom: 1px;
+}
+.auth-subheading {
+    color: white;
+    margin-bottom: 60px; /* Add spacing between title and button */
+}
+
+.auth-btn {
+    color: white;
+    text-decoration: none;
+    background-color: #1db954;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-btn:hover {
+    width: 160px;
+    height: 60px;
+    font-size: 17px;
+}
+/* authorized.liquid css */
+.welcome {
+    color: white;
+    text-align: center;
+}
+.tongue {
+    /* background: url(tongue.png); */
+    width: 300px;
+    height: 300px;
+}
+.tongue-img {
+    width: 350px;
+    position: absolute;
+    z-index: 0;
+}
+.top-songs {
+    z-index: 1;
+    position: absolute;
+}
+
+/* mobile views */
+@media screen and (min-width: 390px) {
+    .welcome {
+        font-size: 25px;
+    }
 }

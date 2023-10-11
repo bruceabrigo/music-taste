@@ -15,6 +15,8 @@ const app = require('liquid-express-views')(express());
 app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'));
+
 
 passport.use(
   new SpotifyStrategy(
@@ -43,17 +45,13 @@ passport.deserializeUser((user, done) => {
 
 // Define your routes here...
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App is listening on http://localhost:${port}!`);
-});
 
 
 app.get('/', (req, res) => {
   // Load environment variables
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.SPOTIFY_CALLBACK_URL;
-
+  
   // Render the view with dynamic URL
   res.render('home.liquid', { clientId, redirectUri });
 });
@@ -77,29 +75,36 @@ app.get('/account', async (req, res) => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
-    );
+      );
+      
+      const accessToken = spotifyResponse.data.access_token;
+      
+      const topArtists = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      
+      // Log topArtist
+      console.log(topArtists.data);
+      // Log topSongs
+      console.log(topSongs.data)
+      
+      res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error occurred while making Spotify API request.");
+    }
+  });
 
-    const accessToken = spotifyResponse.data.access_token;
-
-    const topArtists = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    // Log topArtist
-    console.log(topArtists.data);
-    // Log topSongs
-    console.log(topSongs.data)
-
-    res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error occurred while making Spotify API request.");
-  }
-});
+  // --------------- server ---------------
+  
+  const port = 3000;
+  app.listen(port, () => {
+    console.log(`App is listening on http://localhost:${port}!`);
+  });
