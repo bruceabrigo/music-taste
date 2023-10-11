@@ -58,24 +58,48 @@ app.get('/', (req, res) => {
   res.render('home.liquid', { clientId, redirectUri });
 });
 
-
+// Includes Spotify RedirectURI 
+// Accesses spotify access token required to make Api request
 app.get('/account', async (req, res) => {
-  console.log('Spotify response code: ' + req.query.code)
-  const spotifyResponse = await axios.post(
-    "https://accounts.spotify.com/api/token",
-    queryString.stringify({
-      grant_type: "authorization_code",
-      code: req.query.code,
-      redirect_uri: process.env.SPOTIFY_CALLBACK_URL,
-    }),
-    {
-      headers: {
-        Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
+  console.log('Spotify response code: ' + req.query.code);
+  
+  try {
+    const spotifyResponse = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      queryString.stringify({
+        grant_type: "authorization_code",
+        code: req.query.code,
+        redirect_uri: process.env.SPOTIFY_CALLBACK_URL,
+      }),
+      {
+        headers: {
+          Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
 
-console.log(spotifyResponse.data);
-  res.render(`authorized.liquid`)
-})
+    const accessToken = spotifyResponse.data.access_token;
+
+    const topArtists = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // Log topArtist
+    console.log(topArtists.data);
+    // Log topSongs
+    console.log(topSongs.data)
+
+    res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error occurred while making Spotify API request.");
+  }
+});
