@@ -7,5 +7,9 @@
 </head>
 <body>
     <h1>Welcome to Music Taste</h1>
+    {% for item in apiData.items %}
+        <p>{{ item.name }}</p>
+      {% endfor %}
+      
 </body>
 </html>

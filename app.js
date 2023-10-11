@@ -58,24 +58,45 @@ app.get('/', (req, res) => {
   res.render('home.liquid', { clientId, redirectUri });
 });
 
-
+// Includes Spotify RedirectURI 
+// Accesses spotify access token required to make Api request
 app.get('/account', async (req, res) => {
-  console.log('Spotify response code: ' + req.query.code)
-  const spotifyResponse = await axios.post(
-    "https://accounts.spotify.com/api/token",
-    queryString.stringify({
-      grant_type: "authorization_code",
-      code: req.query.code,
-      redirect_uri: process.env.SPOTIFY_CALLBACK_URL,
-    }),
-    {
-      headers: {
-        Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
+  console.log('Spotify response code: ' + req.query.code);
+  
+  try {
+    const spotifyResponse = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      queryString.stringify({
+        grant_type: "authorization_code",
+        code: req.query.code,
+        redirect_uri: process.env.SPOTIFY_CALLBACK_URL,
+      }),
+      {
+        headers: {
+          Authorization: "Basic " + process.env.BASE64_AUTHORIZATION,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
 
-console.log(spotifyResponse.data);
-  res.render(`authorized.liquid`)
-})
+    const accessToken = spotifyResponse.data.access_token;
+
+    // Now that you have the access token, you can make requests to the Spotify API.
+    const apiResponse = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // Handle the API response data here
+    console.log(apiResponse.data);
+
+    res.render('authorized.liquid', { apiData: apiResponse.data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error occurred while making Spotify API request.");
+  }
+});
+
+
+// BQBrYJ9L9L3TZx6sokkiBDhjwYFAzVqVJYqz1va1rKzirXfc7A1y9PFPlTiyyNdf4k4-zaoBBWFlxY8U-z4iqWSgkKVJ1hs6lRaeEv73Y9V42c5bM0HHbzhN5_DeJ-KebSgv28GFcMKJQr5_CqiQkqH02PmUKBeZzfhudOy_sfmNbyQJlcxkRZ6tbdZMNA'
