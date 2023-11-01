@@ -1,20 +1,40 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <h1 class="welcome">Welcome to Music Taste</h1>
+    {% comment %} play top song when page loads {% endcomment %}
+ <audio id="playTopTrack" autoplay>
+        <source src="{{ topSongs.items[0].preview_url }}" type="audio/mpeg">
+        Your browser does not support audio playback
+    </audio>
     <div id="content">        
         <div class="top-artists">
-            <h2 class="artist-title">Top Artists:</h2>
-            {% for item in topArtists.items %}
-                <p class="artist-response">{{ item.name }}</p>
-            {% endfor %}
-            <img src="{{ topArtists.items[0].images[2].url }}" alt="{{ topArtists.items[0].name }} image">
+            <div class="artists-container">
+                <h2 class="artist-title">Top Artists:</h2>
+                {% for item in topArtists.items %}
+                    <p class="artist-response">{{ item.name }}</p>
+                {% endfor %}
+            </div>
+            <div class="artist-image">
+                <img src="{{ topArtists.items[0].images[0].url }}" alt="{{ topArtists.items[0].name }} image" class="responseImage">
+            </div>
         </div>
         <div class="top-songs">
-            <h2 class="songs-title">Top Songs:</h2>
-            {% for item in topSongs.items %}
-                <p class="songs-response">{{ item.name }}</p>
-            {% endfor %}
+            <div class="songs-container">
+                <h2 class="songs-title">Top Songs:</h2>
+                {% for item in topSongs.items %}
+                        <p class="songs-response">{{ item.name }}</p>
+                {% endfor %}
+            </div>
+            <div class="songs-image">
+                <img src="{{ topSongs.items[0].album.images[0].url }}" alt="{{ topSongs.item[0].name }} image" class="responseImage">
+                <p class="now-playing">Now playing {{ topSongs.items[0].name }} by {{ topSongs.items[0].artists[0].name }}</p>
+            </div>
         </div>
-        </div>
-        <img src="/tongue.png" alt="tongue image" class="tongue-img">
+        <script>
+            window.onload = function() {
+                var audio = document.getElementById('playTopTrack');
+                audio.play();
+            }
+        </script>
+        {% comment %} <img src="/tongue.png" alt="tongue image" class="tongue-img"> {% endcomment %}
 {% endblock %}

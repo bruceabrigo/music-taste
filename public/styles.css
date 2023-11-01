@@ -65,15 +65,19 @@ body {
     z-index: 0; /* Adjust z-index if needed */
 }
 
-.top-artists {
-    border: 1px solid green;
+.top-artists, .top-songs{
+    display: flex;
+    justify-content: space-around;
+    z-index: 1;
+    position: relative;
+    /* border: 1px solid green; */
 }
 
-.top-songs {
+/* .top-songs {
     z-index: 1;
-    position: absolute;
-    border: 1px solid green;
-}
+    position: relative;
+    text-align: right;
+} */
 
 
 .artist-title, .songs-title {
@@ -84,9 +88,22 @@ body {
     color: #f3f3f3;
 }
 
+.responseImage {
+    width: 150px;
+}
+
+.artist-image,
+.songs-image {
+    margin: auto;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 10px;
+}
+
 #content {
     height: 750px;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     margin: 0px auto;
     padding: 15px;
 }

@@ -18,6 +18,7 @@ app.use(passport.session());
 app.use(express.static('public'));
 
 
+
 passport.use(
   new SpotifyStrategy(
     {
@@ -26,7 +27,6 @@ passport.use(
       callbackURL: process.env.SPOTIFY_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
-      // Store user data in your database or perform other actions here.
       return done(null, profile);
     }
   )
@@ -42,11 +42,6 @@ passport.deserializeUser((user, done) => {
 
 // spotifyAuthLink.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-top-read`;
 
-
-// Define your routes here...
-
-
-
 app.get('/', (req, res) => {
   // Load environment variables
   const clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -60,6 +55,12 @@ app.get('/', (req, res) => {
 // Accesses spotify access token required to make Api request
 app.get('/account', async (req, res) => {
   console.log('Spotify response code: ' + req.query.code);
+
+  req.session.destroy(function(err) {
+    if(err) {
+      console.error(err);
+    }
+  });
   
   try {
     const spotifyResponse = await axios.post(
@@ -101,9 +102,9 @@ app.get('/account', async (req, res) => {
       
       // Log topArtist
       // console.log(topArtists.data);
-      console.log(topArtists.data);
+      // console.log(topArtists.data);
       // Log topSongs
-      // console.log(topSongs.data)
+      console.log(topSongs.data)
       
       res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
     } catch (error) {
