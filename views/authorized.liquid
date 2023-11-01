@@ -1,19 +1,20 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <h1 class="welcome">Welcome to Music Taste</h1>
-    <div class="top-artists">
-        <h2 class="artist">Top Artists:</h2>
-        {% for item in topArtists.items %}
-            <p>{{ item.name }}</p>
-        {% endfor %}
-    </div>
-    <div class="tongue">
+    <div id="content">        
+        <div class="top-artists">
+            <h2 class="artist-title">Top Artists:</h2>
+            {% for item in topArtists.items %}
+                <p class="artist-response">{{ item.name }}</p>
+            {% endfor %}
+            <img src="{{ topArtists.items[0].images[2].url }}" alt="{{ topArtists.items[0].name }} image">
+        </div>
         <div class="top-songs">
-            <h2>Top Songs:</h2>
+            <h2 class="songs-title">Top Songs:</h2>
             {% for item in topSongs.items %}
-                <p>{{ item.name }}</p>
+                <p class="songs-response">{{ item.name }}</p>
             {% endfor %}
         </div>
+        </div>
         <img src="/tongue.png" alt="tongue image" class="tongue-img">
-    </div>
 {% endblock %}

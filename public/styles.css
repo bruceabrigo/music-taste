@@ -54,24 +54,49 @@ body {
     color: white;
     text-align: center;
 }
-.tongue {
-    /* background: url(tongue.png); */
-    width: 300px;
-    height: 300px;
-}
+
 .tongue-img {
     width: 350px;
+    height: 350px;
     position: absolute;
-    z-index: 0;
+    top: 50%; /* Move the top of the image to the center of the viewport */
+    left: 50%; /* Move the left of the image to the center of the viewport */
+    transform: translate(-50%, -50%); /* Center the image perfectly */
+    z-index: 0; /* Adjust z-index if needed */
 }
+
+.top-artists {
+    border: 1px solid green;
+}
+
 .top-songs {
     z-index: 1;
     position: absolute;
+    border: 1px solid green;
+}
+
+
+.artist-title, .songs-title {
+    color: #4b917d;
+}
+
+.artist-response, .songs-response {
+    color: #f3f3f3;
+}
+
+#content {
+    height: 750px;
+    border: 1px solid green;
+    margin: 0px auto;
+    padding: 15px;
 }
 
 /* mobile views */
 @media screen and (min-width: 390px) {
     .welcome {
         font-size: 25px;
+    }
+    #content {
+        max-width: 390px;
     }
 }

@@ -84,16 +84,26 @@ app.get('/account', async (req, res) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      const topArtist = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=1", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
+      // Assuming topArtists.data contains the response data
+      
+
       
       // Log topArtist
+      // console.log(topArtists.data);
       console.log(topArtists.data);
       // Log topSongs
-      console.log(topSongs.data)
+      // console.log(topSongs.data)
       
       res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
     } catch (error) {
