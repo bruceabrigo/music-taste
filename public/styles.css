@@ -59,10 +59,10 @@ body {
     width: 350px;
     height: 350px;
     position: absolute;
-    top: 50%; /* Move the top of the image to the center of the viewport */
-    left: 50%; /* Move the left of the image to the center of the viewport */
-    transform: translate(-50%, -50%); /* Center the image perfectly */
-    z-index: 0; /* Adjust z-index if needed */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 0; 
 }
 
 .top-artists, .top-songs{
@@ -73,11 +73,6 @@ body {
     /* border: 1px solid green; */
 }
 
-/* .top-songs {
-    z-index: 1;
-    position: relative;
-    text-align: right;
-} */
 
 
 .artist-title, .songs-title {
@@ -103,7 +98,7 @@ body {
 
 #content {
     height: 750px;
-    /* border: 1px solid green; */
+    background-color: #535353;
     margin: 0px auto;
     padding: 15px;
 }

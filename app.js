@@ -12,13 +12,6 @@ dotenv.config();
 
 const app = require('liquid-express-views')(express());
 
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static('public'));
-
-
-
 passport.use(
   new SpotifyStrategy(
     {
@@ -40,8 +33,16 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-// spotifyAuthLink.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=user-top-read`;
-
+app.get('/logout', (req, res) => {
+  delete req.session.accessToken; // For example, delete the accessToken from the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.redirect('/'); 
+    }
+  });
+});
 app.get('/', (req, res) => {
   // Load environment variables
   const clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -50,6 +51,32 @@ app.get('/', (req, res) => {
   // Render the view with dynamic URL
   res.render('home.liquid', { clientId, redirectUri });
 });
+
+// ---------- Refresh Token ------------
+const storedRefreshToken = "your_stored_refresh_token_here"; // Retrieve this securely
+
+const refreshAccessToken = async () => {
+  try {
+    const response = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      queryString.stringify({
+        grant_type: "refresh_token",
+        refresh_token: storedRefreshToken,
+        client_id: process.env.SPOTIFY_CLIENT_ID,
+        client_secret: process.env.SPOTIFY_CLIENT_SECRET
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    );
+    return response.data.access_token; // Return the new access token
+  } catch (error) {
+    throw new Error("Failed to refresh access token");
+  }
+};
+
 
 // Includes Spotify RedirectURI 
 // Accesses spotify access token required to make Api request
@@ -104,7 +131,7 @@ app.get('/account', async (req, res) => {
       // console.log(topArtists.data);
       // console.log(topArtists.data);
       // Log topSongs
-      console.log(topSongs.data)
+      // console.log(topSongs.data)
       
       res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
     } catch (error) {
@@ -112,7 +139,15 @@ app.get('/account', async (req, res) => {
       res.status(500).send("Error occurred while making Spotify API request.");
     }
   });
-
+  // --------------- Logout ---------------
+  app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+      }
+      res.redirect('/'); // Redirect to the home page after logging out
+    });
+  });
   // --------------- server ---------------
   
   const port = 3000;
