@@ -12,6 +12,7 @@ dotenv.config();
 
 const app = require('liquid-express-views')(express());
 
+app.use(express.static('public'));
 passport.use(
   new SpotifyStrategy(
     {
@@ -82,12 +83,6 @@ const refreshAccessToken = async () => {
 // Accesses spotify access token required to make Api request
 app.get('/account', async (req, res) => {
   console.log('Spotify response code: ' + req.query.code);
-
-  req.session.destroy(function(err) {
-    if(err) {
-      console.error(err);
-    }
-  });
   
   try {
     const spotifyResponse = await axios.post(
