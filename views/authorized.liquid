@@ -1,14 +1,17 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-    <h1 class="welcome">Welcome to Music Taste</h1>
-    {% comment %} <audio id="playTopTrack" autoplay>
+    <div class="welcome-container">
+        <h1 class="welcome">Welcome to Music Taste</h1>
+        <p>Your top listens in the last 30 days</p>
+    </div>
+    <audio id="playTopTrack" autoplay>
         <source src="{{ topSongs.items[0].preview_url }}" type="audio/mpeg">
         Your browser does not support audio playback
-    </audio> {% endcomment %}
+    </audio> 
     <div id="content">        
         <div class="top-artists">
             <div class="artists-container">
-                <h2 class="artist-title">Top Artists:</h2>
+                <h2 class="artist-title">Top Artists</h2>
                 {% for item in topArtists.items %}
                     <p class="artist-response">{{ item.name }}</p>
                 {% endfor %}
@@ -17,33 +20,43 @@
                 <img id="artistImage" src="{{ topArtists.items[0].images[0].url }}" alt="{{ topArtists.items[0].name }} image" class="responseImage">
             </div>
         </div>
+
         <div class="top-songs">
-            <div class="songs-container">
-                <h2 class="songs-title">Top Songs:</h2>
-                {% for item in topSongs.items %}
-                        <p class="songs-response">{{ item.name }}</p>
-                {% endfor %}
-            </div>
             <div class="songs-image">
                 <img id="songImage" src="{{ topSongs.items[0].album.images[0].url }}" alt="{{ topSongs.items[0].name }} image" class="responseImage">
                 <p class="now-playing">Now playing {{ topSongs.items[0].name }} by {{ topSongs.items[0].artists[0].name }}</p>
+            </div>
+            <div class="songs-container">
+                <h2 class="songs-title">Top Songs</h2>
+                {% for item in topSongs.items %}
+                        <p class="songs-response">{{ item.name }}</p>
+                {% endfor %}
             </div>
         </div>
         {% comment %} <form action="/logout" method="GET">
         <button type="submit">Logout</button>
     </form> {% endcomment %}
     </div>
-    <div id="subContent">
+    
+    <div id="buttonContainer">
         <button id="downloadButton">Download as PNG</button>
+        <button id="nextButton" href>Next</button>
+        <form action="/logout" method="get">
+        <button type="submit">Logout</button>
+      </form>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script>
         // ---------------------------------- Download Function ----------------------------------
         document.getElementById('downloadButton').addEventListener('click', function() {
+            // onclick button to be displayed as none
             document.getElementById('downloadButton').style.display = 'none'
+            // convert html to canvas and download as png
             html2canvas(document.querySelector('main')).then(function(canvas) {
                 let link = document.createElement('a');
                 document.body.appendChild(link);
+                // define file name
                 link.download = 'YourMusicTaste.png';
                 canvas.toBlob(function(blob) {
                     let url = URL.createObjectURL(blob);
@@ -52,6 +65,7 @@
                     document.body.removeChild(link);
 
                     URL.revokeObjectURL(url)
+                    // after canvas is generated style button to be block in order to be shown again
                     document.getElementById('downloadButton').style.display = 'block'
                 });
             });
@@ -68,6 +82,7 @@
             ctx.drawImage(this, 0, 0);
             document.getElementById('artistImage').src = canvas.toDataURL();
         };
+        // similar to authorized.liquid, select first image url in index to avoid saving multiple urls for IMG
         artistImg.src = "{{ topArtists.items[0].images[0].url }}";
 
         let songImg = new Image();

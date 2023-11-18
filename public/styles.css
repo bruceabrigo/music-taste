@@ -5,6 +5,13 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.welcome-container {
+    color: white;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .auth-container {
     display: flex;
     justify-content: center;
@@ -50,20 +57,6 @@ body {
     font-size: 17px;
 }
 /* authorized.liquid css */
-.welcome {
-    color: white;
-    text-align: center;
-}
-
-.tongue-img {
-    width: 350px;
-    height: 350px;
-    position: absolute;
-    top: 50%; 
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    z-index: 0; 
-}
 
 .top-artists, .top-songs{
     display: flex;
@@ -73,7 +66,9 @@ body {
     /* border: 1px solid green; */
 }
 
-
+.songs-container {
+    text-align: right;
+}
 
 .artist-title, .songs-title {
     color: #4b917d;
@@ -97,21 +92,34 @@ body {
 }
 
 #content {
-    height: 600px;
+    height: 550px;
     background-color: #535353;
     margin: 0px auto;
     padding: 15px;
 }
 
-#subContent {
-    display: flex;
+#buttonContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px; /* Adjust gap as needed */
     justify-content: center;
-    margin: 20px auto;
-    padding: 10px;
+    align-items: center;
+    margin: 0 auto;
+    padding: 15px;
+    max-width: 390px;
 }
 
 #downloadButton {
     background-color: #1db954;
+    border-radius: 5px;
+    border: 1px;
+    color: white;
+    padding: 15px;
+}
+
+#nextButton {
+    margin-left: 10px;
+    background-color: #3498db; /* Change color as needed */
     border-radius: 5px;
     border: 1px;
     color: white;
