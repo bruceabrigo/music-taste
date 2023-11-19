@@ -98,15 +98,24 @@ body {
     padding: 15px;
 }
 
+.parentContainer {
+    width: 100%;
+}
+
+
 #buttonContainer {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 10px; /* Adjust gap as needed */
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    padding: 15px;
     max-width: 390px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#logoutButton {
+    background-color: #E74545;
+    border-radius: 5px;
+    border: 1px;
+    color: white;
+    padding: 15px;
 }
 
 #downloadButton {
@@ -119,14 +128,14 @@ body {
 
 #nextButton {
     margin-left: 10px;
-    background-color: #3498db; /* Change color as needed */
+    background-color: #3498db; 
     border-radius: 5px;
     border: 1px;
     color: white;
     padding: 15px;
 }
 
-#downloadButton:hover {
+#downloadButton:hover, #nextButton:hover, #logoutButton:hover {
     background-color: #212121;
     cursor: pointer;
 }

@@ -6,7 +6,6 @@ const dotenv = require('dotenv');
 const router = express.Router();
 const queryString = require('node:querystring')
 const axios = require('axios')
-// const spotifyAuthLink = document.getElementById('spotify-auth-link');
 
 dotenv.config();
 
@@ -119,15 +118,12 @@ app.get('/account', async (req, res) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
       // same api call instead for tracks
       const topSongs = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      
       // render the liquid view and pass in api calls as parameters
       res.render('authorized.liquid', { topArtists: topArtists.data, topSongs: topSongs.data });
     } catch (error) {
@@ -160,7 +156,6 @@ app.get('/account', async (req, res) => {
       res.status(500).send("Error occurred during logout. Please try logging out again.");
     }
   });
-  
   
   // --------------- server ---------------
   

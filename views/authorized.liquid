@@ -4,10 +4,10 @@
         <h1 class="welcome">Welcome to Music Taste</h1>
         <p>Your top listens in the last 30 days</p>
     </div>
-    <audio id="playTopTrack" autoplay>
+    {% comment %} <audio id="playTopTrack" autoplay>
         <source src="{{ topSongs.items[0].preview_url }}" type="audio/mpeg">
         Your browser does not support audio playback
-    </audio> 
+    </audio>  {% endcomment %}
     <div id="content">        
         <div class="top-artists">
             <div class="artists-container">
@@ -39,11 +39,10 @@
     </div>
     
     <div id="buttonContainer">
-        <button id="downloadButton">Download as PNG</button>
-        <button id="nextButton" href>Next</button>
         <form action="/logout" method="get">
-        <button type="submit">Logout</button>
-      </form>
+            <button type="submit" id="logoutButton">Logout</button>
+        </form>
+        <button id="downloadButton">Download as PNG</button>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
@@ -52,6 +51,7 @@
         document.getElementById('downloadButton').addEventListener('click', function() {
             // onclick button to be displayed as none
             document.getElementById('downloadButton').style.display = 'none'
+            document.getElementById('logoutButton').style.display = 'none'
             // convert html to canvas and download as png
             html2canvas(document.querySelector('main')).then(function(canvas) {
                 let link = document.createElement('a');
@@ -67,6 +67,7 @@
                     URL.revokeObjectURL(url)
                     // after canvas is generated style button to be block in order to be shown again
                     document.getElementById('downloadButton').style.display = 'block'
+                    document.getElementById('logoutButton').style.display = 'block'
                 });
             });
         });
@@ -96,9 +97,5 @@
             document.getElementById('songImage').src = canvas.toDataURL();
         };
         songImg.src = "{{ topSongs.items[0].album.images[0].url }}";
-
-        // remove styling from download button to not be showed on the png
-        // document.getElementById('downloadButton').style.display = 'none'
-
     </script>
 {% endblock %}
