@@ -52,9 +52,8 @@ body {
 }
 
 .auth-btn:hover {
-    width: 160px;
-    height: 60px;
-    font-size: 17px;
+    background-color: #b3b3b3;
+    cursor: pointer;
 }
 /* authorized.liquid css */
 
