@@ -91,7 +91,7 @@ body {
 }
 
 #content {
-    height: 550px;
+    height: 625px;
     background-color: #535353;
     margin: 0px auto;
     padding: 15px;
@@ -103,8 +103,8 @@ body {
 
 
 #buttonContainer {
-    max-width: 390px;
-    margin: 0 auto;
+    max-width: 350px;
+    margin: 0px auto;
     display: flex;
     justify-content: space-between;
 }

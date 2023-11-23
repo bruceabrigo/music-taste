@@ -1,14 +1,14 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-    <div class="welcome-container">
-        <h1 class="welcome">Welcome to Music Taste</h1>
-        <p>Your top listens in the last 30 days</p>
-    </div>
-    {% comment %} <audio id="playTopTrack" autoplay>
-        <source src="{{ topSongs.items[0].preview_url }}" type="audio/mpeg">
-        Your browser does not support audio playback
-    </audio>  {% endcomment %}
+<audio id="playTopTrack" autoplay>
+    <source src="{{ topSongs.items[0].preview_url }}" type="audio/mpeg">
+    Your browser does not support audio playback
+    </audio>  
     <div id="content">        
+        <div class="welcome-container">
+            <h1 class="welcome">Welcome to Music Taste</h1>
+            <p>Your top listens in the last 30 days</p>
+        </div>
         <div class="top-artists">
             <div class="artists-container">
                 <h2 class="artist-title">Top Artists</h2>
@@ -33,9 +33,6 @@
                 {% endfor %}
             </div>
         </div>
-        {% comment %} <form action="/logout" method="GET">
-        <button type="submit">Logout</button>
-    </form> {% endcomment %}
     </div>
     
     <div id="buttonContainer">
@@ -47,30 +44,46 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script>
-        // ---------------------------------- Download Function ----------------------------------
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            // onclick button to be displayed as none
-            document.getElementById('downloadButton').style.display = 'none'
-            document.getElementById('logoutButton').style.display = 'none'
-            // convert html to canvas and download as png
-            html2canvas(document.querySelector('main')).then(function(canvas) {
-                let link = document.createElement('a');
-                document.body.appendChild(link);
-                // define file name
-                link.download = 'YourMusicTaste.png';
-                canvas.toBlob(function(blob) {
-                    let url = URL.createObjectURL(blob);
-                    link.href = url;
-                    link.click();
-                    document.body.removeChild(link);
+    // ---------------------------------- Download Function ----------------------------------
+    document.getElementById('downloadButton').addEventListener('click', function() {
+    // onclick button to be displayed as none
+    document.getElementById('downloadButton').style.display = 'none';
+    document.getElementById('logoutButton').style.display = 'none';
 
-                    URL.revokeObjectURL(url)
-                    // after canvas is generated style button to be block in order to be shown again
-                    document.getElementById('downloadButton').style.display = 'block'
-                    document.getElementById('logoutButton').style.display = 'block'
-                });
-            });
+    // get content by id
+    const contentElement = document.getElementById('content');
+    // Get the dimensions and position of the #content element
+    const rect = contentElement.getBoundingClientRect();
+
+    // Convert html to canvas and download as png
+    html2canvas(document.body, {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height
+    }).then(function(canvas) {
+        let link = document.createElement('a');
+        document.body.appendChild(link);
+        // Define file name
+        link.download = 'YourMusicTaste.png';
+        // Create a blob from the canvas
+        canvas.toBlob(function(blob) {
+            // Create a URL for the blob and set it as the href of the download link
+            let url = URL.createObjectURL(blob);
+            link.href = url;
+            // Trigger a click on the link to start the download
+            link.click();
+            // Clean up
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            // After canvas is generated, style button to be block to be shown again
+            document.getElementById('downloadButton').style.display = 'block';
+            document.getElementById('logoutButton').style.display = 'block';
         });
+    });
+});
+
+
 
         // ---------------------------------- Include Images Function ----------------------------------
         let artistImg = new Image();
