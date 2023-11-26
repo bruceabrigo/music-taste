@@ -2,7 +2,11 @@ body {
     padding: 0;
     margin: 0;
     background-color: #535353;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+}
+.welcome span {
+    color: #FF5733; /* Set a different color for the "Taste" part (you can use any valid color value) */
 }
 
 .welcome-container {
@@ -33,9 +37,18 @@ body {
     color: white;
     margin-bottom: 1px;
 }
+
+.card-title span {
+    color: #FF5733; /* Set a different color for the "Taste" part (you can use any valid color value) */
+}
+
 .auth-subheading {
     color: white;
     margin-bottom: 60px; /* Add spacing between title and button */
+}
+
+.auth-subheading span{
+    color: #1db954;
 }
 
 .auth-btn {
