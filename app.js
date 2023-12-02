@@ -159,7 +159,5 @@ app.get('/account', async (req, res) => {
   
   // --------------- server ---------------
   
-  const port = 3000;
-  app.listen(port, () => {
-    console.log(`App is listening on http://localhost:${port}!`);
-  });
+  const PORT = process.env.PORT
+  app.listen(PORT, () => console.log(`Connected to port: ${PORT}`))
