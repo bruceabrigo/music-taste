@@ -1,5 +1,5 @@
 [build]
-  command = "node app.js"
+  command = "nodemon app.js"
   publish = "dist"  # Change this to your actual build output directory
 
 [settings]

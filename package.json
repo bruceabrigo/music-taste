@@ -16,10 +16,12 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "liquid-express-views": "^1.0.8",
+    "netlify-lambda": "^2.0.16",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-spotify": "^2.0.0",
-    "puppeteer": "^21.4.1"
+    "puppeteer": "^21.4.1",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.4.11",
