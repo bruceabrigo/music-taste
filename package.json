@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "liquidjs -c '{\"extname\": \".liquid\"}' -r ./views -o ./dist",
     "start": "nodemon app.js"
   },
   "keywords": [],
