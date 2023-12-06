@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "node app.js"
   publish = "dist"  # Change this to your actual build output directory
 
 [settings]
