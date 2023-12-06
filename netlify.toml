@@ -1,13 +1,11 @@
 [build]
-  command: npm run build
-  commandOrigin: config
-
+  command = "npm run build"
+  publish = "dist"  # Change this to your actual build output directory
 
 [settings]
   # Define environment variables for your 
-  - BASE64_AUTHORIZATION
-  - PORT
-  - SESSION_SECRET
-  - SPOTIFY_CALLBACK_URL
-  - SPOTIFY_CLIENT_ID
-  - SPOTIFY_CLIENT_SECRET
+  SPOTIFY_CLIENT_ID = "${SPOTIFY_CLIENT_ID}"
+  SPOTIFY_CLIENT_SECRET = "${SPOTIFY_CLIENT_SECRET}"
+  SPOTIFY_CALLBACK_URL = "${SPOTIFY_CALLBACK_URL}"
+  BASE64_AUTHORIZATION = "${BASE64_AUTHORIZATION}"
+  SESSION_SECRET = "${SESSION_SECRET}"
