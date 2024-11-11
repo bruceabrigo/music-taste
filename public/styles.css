@@ -6,8 +6,9 @@ body {
     font-size: 14px;
     height: 100vh;
 }
-.welcome span {
-    color: #FF5733; /* Set a different color for the "Taste" part (you can use any valid color value) */
+.welcome {
+    color: #323232; /* Set a different color for the "Taste" part (you can use any valid color value) */
+    font-size: 60px;
 }
 
 .welcome-container {
@@ -22,6 +23,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    filter: drop-shadow(-4px 3px 25px -10px#000000);
 }
 
 .auth-card {
@@ -93,7 +95,7 @@ body {
 }
 
 .artist-response, .songs-response {
-    color: #f3f3f3;
+    color: #000000;
 }
 
 .responseImage {
@@ -105,15 +107,22 @@ body {
     margin: auto;
     align-items: center;
     text-align: center;
-    color: white;
     font-size: 10px;
 }
 
 #content {
     height: 625px;
-    background-color: #535353;
+    background-color: #f3f3f3;
+    border-radius: 50px;
     margin: 25px auto;
     padding: 15px;
+    filter: drop-shadow(-4px 3px 25px -10px#000000);
+}
+
+.content-title-left {
+    color: white;
+    font-size: 70px;
+    margin: 10px 25px;
 }
 
 .parentContainer {
@@ -159,11 +168,15 @@ body {
 }
 
 /* mobile views */
-@media screen and (min-width: 390px) {
+@media only screen and (min-width: 390px) {
+    .content-title-left {
+        font-size: 45px;
+    }
     .welcome {
-        font-size: 25px;
+        font-size: 35px;
     }
     #content {
-        max-width: 390px;
+        max-width: 323px;
+        max-height: 600px;
     }
 }
