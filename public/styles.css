@@ -1,9 +1,10 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: #535353;
-    font-family: 'Sora', sans-serif;
+    background-image: linear-gradient(to left bottom, #105766, #00626b, #006d6b, #007864, #008159, #008250, #028246, #0e823a, #0c7a36, #0b7232, #096b2f, #08632b);
+    font-family: 'Helvetica', sans-serif;
     font-size: 14px;
+    height: 100vh;
 }
 .welcome span {
     color: #FF5733; /* Set a different color for the "Taste" part (you can use any valid color value) */
@@ -28,14 +29,17 @@ body {
     flex-direction: column; /* Stack title and button vertically */
     justify-content: center;
     align-items: center;
-    background-color: #212121;
+    background-color: #FFFFFF;
+    border-radius: 50px;
     width: 300px;
     height: 400px;
 }
 
 .card-title {
-    color: white;
-    margin-bottom: 1px;
+    color: #323232;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: .5px;
 }
 
 .card-title span {
@@ -43,7 +47,9 @@ body {
 }
 
 .auth-subheading {
-    color: white;
+    color: #323232;
+    margin-top: 0;
+    font-size: 16px;
     margin-bottom: 60px; /* Add spacing between title and button */
 }
 
@@ -106,7 +112,7 @@ body {
 #content {
     height: 625px;
     background-color: #535353;
-    margin: 0px auto;
+    margin: 25px auto;
     padding: 15px;
 }
 
